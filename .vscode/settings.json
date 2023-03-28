@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "string": "cpp",
-        "type_traits": "cpp",
-        "optional": "cpp",
-        "system_error": "cpp",
-        "chrono": "cpp"
-    }
-}
