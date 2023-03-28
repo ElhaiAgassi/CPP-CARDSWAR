@@ -6,7 +6,7 @@ In this task, we implement the WAR card game for two players. There is a standar
 To see examples of the class in action, refer to `Demo.cpp`.
 
 ## TDD
-In the current step I implemented very basic skeleton of the game the tests. it made according the TDD approached.
+#### In the current step I implemented a very basic skeleton of the game (include not work/finished classes) and the tests of the game. It made according the TDD development approache.
 
 TDD is a software development approach that involves writing automated tests before writing any actual code. The process typically involves the following steps:
 
