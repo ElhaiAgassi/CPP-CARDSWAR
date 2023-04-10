@@ -1,25 +1,17 @@
-#ifndef CARD_H
-#define CARD_H
-
+#pragma once
 #include <string>
 
-namespace ariel {
+class Card
+{
+private:
+    int m_value;
+    std::string m_suit;
+    std::string m_name;
 
-    class Card {
-
-        private:
-            std::string suit;
-            std::string rank;
-            int value;
-
-        public:
-            Card(std::string suit, std::string rank, int value);
-            std::string getSuit() const;
-            std::string getRank() const;
-            int getValue() const;
-            bool operator<(const Card& other) const;
-
-    };
-
-}
-#endif /* CARD_H */
+public:
+    Card(int value, const std::string& suit, const std::string& name);
+    int getValue() const;
+    std::string getSuit() const;
+    std::string getName() const;
+    void printCard() const;
+};

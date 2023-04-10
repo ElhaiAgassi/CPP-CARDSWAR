@@ -1,9 +1,7 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include "player.hpp"
 
-namespace ariel {
     class Game {
     private:
         Player& m_p1;
@@ -18,6 +16,5 @@ namespace ariel {
         void printStats() const;
         void printPlayerStats() const;
     };
-}
 
-#endif /* GAME_H */
+

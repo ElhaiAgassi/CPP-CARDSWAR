@@ -1,27 +1,27 @@
 #include <string>
 #include "card.hpp"
+using namespace std;
 
-namespace ariel {
 
-    Card::Card(std::string suit, std::string rank, int value)
-        : suit(suit), rank(rank), value(value)
-    {
-    }
 
-    std::string Card::getSuit() const {
-        return suit;
-    }
-
-    std::string Card::getRank() const {
-        return rank;
-    }
-
-    int Card::getValue() const {
-        return value;
-    }
-
-    bool Card::operator<(const Card& other) const {
-        return value < other.value;
-    }
-
+Card::Card(int value, const std::string& suit, const std::string& name)
+    : m_value(value), m_suit(suit), m_name(name)
+{
 }
+
+
+string Card::getSuit() const {
+    return m_suit;
+}
+
+string Card::getName() const {
+    return m_name;
+}
+
+int Card::getValue() const {
+    return m_value;
+}
+
+// bool Card::operator<(const Card& other) const {
+//     return value < other.value;
+// }

@@ -1,18 +1,25 @@
 #include <iostream>
 #include "player.hpp"
 
-namespace ariel
-{
-    Player::Player(std::string name) : name(name), m_stack(), m_taken() {}
+ using namespace std;
 
-    int Player::stacksize() const
+    Player::Player(const string& name) : _name(name), m_stack(), m_taken() {}
+
+    string Player::getName() const
     {
-        return m_stack.size();
+        return this->_name;
     }
 
-    int Player::cardesTaken() const
+    Card Player::playCard()
     {
-        return m_taken.size();
+        if (!m_stack.empty())
+        {
+            Card topCard = m_stack.back();
+            m_stack.pop_back();
+            return topCard;
+        }
+        else throw std::runtime_error("No cards left to play");
+
     }
 
     void Player::takeCard(Card& c)
@@ -24,4 +31,29 @@ namespace ariel
     {
         m_stack.push_back(c);
     }
-}
+
+    int Player::stacksize() const
+    {
+        return m_stack.size();
+    }
+
+    int Player::cardesTaken() const
+    {
+        return m_taken.size();
+    }
+
+    const Card& Player::getLastPlayedCard() const
+    {
+        return m_playedCards.back();
+    }
+
+    int Player::getNumOfPlayedCards() const
+    {
+        return m_playedCards.size();
+    }
+
+    const std::vector<Card>& Player::getPlayedCards() const
+    {
+        return m_playedCards;
+    }
+
