@@ -4,7 +4,8 @@
 #include <string>
 #include "card.hpp"
 
-    class Player
+
+class Player
     {
     private:
         std::string _name;
@@ -17,12 +18,15 @@
         std::string getName() const;
         Card playCard();
         void takeCard(Card& c);
-        void returnCard(Card& c);
+        // void returnCard(Card& c);
         int stacksize() const;
         int cardesTaken() const;
         const Card& getLastPlayedCard() const;
         int getNumOfPlayedCards() const;
         const std::vector<Card>& getPlayedCards() const;
+        void getAllTheJackpot(std::vector<Card>* tempDeck);
+        bool operator==(const Player& other) const;
+
     };
 
 

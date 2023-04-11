@@ -1,7 +1,7 @@
 #pragma once
-
 #include "card.hpp"
 #include <vector>
+#include "player.hpp"
 
 using namespace std;
 
@@ -23,8 +23,11 @@ public:
     // Get the size of the deck
     int size() const;
 
-     // Get the deck
-    vector<Card> getDeck() const;
+    // Get the deck
+    const std::vector<Card>* getDeck() const;
+
+    //split the Deck to both players
+    void splitDeck(Player* p1, Player* p2);
 
 private:
     // Vector to store the deck of cards

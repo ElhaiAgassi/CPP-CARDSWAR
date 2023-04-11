@@ -1,78 +1,74 @@
 #include "game.hpp"
+#include "deck.hpp"
+
 #include <iostream>
 #include <iomanip>
 
 using namespace std; 
 
-Game::Game(Player &p1, Player &p2) : m_p1(p1), m_p2(p2) {}
+Game::Game(Player &p1, Player &p2) : m_p1(p1), m_p2(p2) {
+     
+    Deck m_deck; // Create a Deck object
+    m_deck.splitDeck(&p1,&p2);
+    cout << p1.stacksize()<< "," <<p2.stacksize() << endl;
+
+}
 
 void Game::playTurn()
 {
+    if (m_p1 == m_p2) {
+        throw std::runtime_error("Error: Players cannot be the same.");
+    }
     // Both players put a card on the table
     Card c1 = m_p1.playCard();
     Card c2 = m_p2.playCard();
+    
+    vector<Card> temp_deck; 
+    temp_deck.push_back(c1);
+    temp_deck.push_back(c2);
+
 
     cout << m_p1.getName() << " played " << c1.getName() << " of " << c1.getSuit() << ". ";
     cout << m_p2.getName() << " played " << c2.getName() << " of " << c2.getSuit() << ". ";
 
+
     // Compare the card values
-    if (c1.getValue() > c2.getValue())
-    {
-        cout << m_p1.getName() << " wins." << endl;
-        m_p1.takeCard(c1);
-        m_p1.takeCard(c2);
-    }
-    else if (c1.getValue() < c2.getValue())
-    {
-        cout << m_p2.getName() << " wins." << endl;
-        m_p2.takeCard(c1);
-        m_p2.takeCard(c2);
-    }
-    else
+    while (c1.getValue() == c2.getValue())
     {
         cout << "Draw." << endl;
-        m_p1.returnCard(c1);
-        m_p2.returnCard(c2);
 
-        // Put two more cards on the table
         Card c3 = m_p1.playCard();
+        temp_deck.push_back(c3);
         Card c4 = m_p2.playCard();
+        temp_deck.push_back(c4);
+        Card c5 = m_p1.playCard();
+        temp_deck.push_back(c5);
+        Card c6 = m_p2.playCard();
+        temp_deck.push_back(c6);
+        
+        c1 = c5;
+        c2 = c6;
 
-        cout << m_p1.getName() << " played " << c3.getName() << " of " << c3.getSuit() << ". ";
-        cout << m_p2.getName() << " played " << c4.getName() << " of " << c4.getSuit() << ". ";
+        cout << m_p1.getName() << " played " << c1.getName() << " of " << c1.getSuit() << ". ";
+        cout << m_p2.getName() << " played " << c2.getName() << " of " << c2.getSuit() << ". ";
 
-        // Compare the last card values
-        if (c3.getValue() > c4.getValue())
-        {
-            cout << m_p1.getName() << " wins." << endl;
-            m_p1.takeCard(c1);
-            m_p1.takeCard(c2);
-            m_p1.takeCard(c3);
-            m_p1.takeCard(c4);
-        }
-        else if (c3.getValue() < c4.getValue())
-        {
-            cout << m_p2.getName() << " wins." << endl;
-            m_p2.takeCard(c1);
-            m_p2.takeCard(c2);
-            m_p2.takeCard(c3);
-            m_p2.takeCard(c4);
-        }
-        else
-        {
-            cout << "Draw." << endl;
-            m_p1.returnCard(c1);
-            m_p2.returnCard(c2);
-            m_p1.returnCard(c3);
-            m_p2.returnCard(c4);
-        }
+    }
+    if (c1.getValue() < c2.getValue())
+    {
+        cout << m_p2.getName() << " wins." << endl;
+        m_p2.getAllTheJackpot(&temp_deck);
+    }
+    else //
+    {
+        cout << m_p1.getName() << " wins." << endl;
+        m_p1.getAllTheJackpot(&temp_deck);
     }
 }
 
 void Game::playAll()
 {
     // Play the game until one player runs out of cards
-    while (m_p1.stacksize() > 0 && m_p2.stacksize() > 0)
+    while (m_p1.stacksize() > 0 || m_p2.stacksize() > 0)
     {
         playTurn();
     }
@@ -104,14 +100,14 @@ void Game ::printLog() const
     cout << m_p1.getName() << " played: ";
     for (const Card &c : m_p1.getPlayedCards())
     {
-        cout << c.getName() << " of " << c.getSuit() << " ";
+        cout << c.getName() << " of " << c.getSuit() << ", ";
     }
     cout << endl;
 
     cout << m_p2.getName() << " played: ";
     for (const Card &c : m_p2.getPlayedCards())
     {
-        cout << c.getName() << " of " << c.getSuit() << " ";
+        cout << c.getName() << " of " << c.getSuit() << ", ";
     }
     cout << endl;
 }
@@ -126,7 +122,7 @@ void Game::printLastTurn() const
     cout << c1.getName() << " of " << c1.getSuit() << endl;
 
     cout << m_p2.getName() << " played: ";
-    const Card &c2 = m_p2.getLastPlayedCard();
+     const Card &c2 = m_p2.getLastPlayedCard();
     cout << c2.getName() << " of " << c2.getSuit() << endl;
 }
 
@@ -137,7 +133,6 @@ void Game::printStats() const
     cout << "-----------------" << endl;
     cout << "Total cards played: " << m_p1.getNumOfPlayedCards() + m_p2.getNumOfPlayedCards() << endl;
     cout << "Total cards taken: " << m_p1.cardesTaken() + m_p2.cardesTaken() << endl;
-    cout << "Winner: ";
     printWiner();
     cout << endl;
 }
