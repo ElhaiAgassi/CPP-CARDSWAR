@@ -18,7 +18,6 @@ class Player
         std::string getName() const;
         Card playCard();
         void takeCard(Card& c);
-        // void returnCard(Card& c);
         int stacksize() const;
         int cardesTaken() const;
         const Card& getLastPlayedCard() const;
@@ -26,6 +25,7 @@ class Player
         const std::vector<Card>& getPlayedCards() const;
         void getAllTheJackpot(std::vector<Card>* tempDeck);
         bool operator==(const Player& other) const;
+        void winCard(Card &c);
 
     };
 

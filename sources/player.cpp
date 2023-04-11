@@ -28,15 +28,18 @@ void Player::takeCard(Card &c)
     m_stack.push_back(c);
 }
 
-void Player::getAllTheJackpot(std::vector<Card>* tempDeck)
+void Player::getAllTheJackpot(std::vector<Card> *tempDeck)
 {
-    for (const Card& card : *tempDeck)
+    for (const Card &card : *tempDeck)
     {
         m_taken.push_back(card);
     }
 }
 
-
+void Player::winCard(Card &card)
+{
+    m_taken.push_back(card);
+}
 
 int Player::stacksize() const
 {
@@ -63,8 +66,8 @@ const std::vector<Card> &Player::getPlayedCards() const
     return m_playedCards;
 }
 
-bool Player::operator==(const Player& other) const {
+bool Player::operator==(const Player &other) const
+{
     // Compare member variables for equality
     return (_name == other.getName());
 }
-

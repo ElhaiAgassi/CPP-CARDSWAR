@@ -19,6 +19,12 @@ void Game::playTurn()
     {
         throw std::runtime_error("Error: Players cannot be the same.");
     }
+
+    // if (m_p1.stacksize() <= 0 || m_p2.stacksize() <= 0)
+    // {
+    //     throw std::runtime_error("The players stack is out");
+    // }
+
     // Both players put a card on the table
     Card c1 = m_p1.playCard();
     Card c2 = m_p2.playCard();
@@ -31,41 +37,87 @@ void Game::playTurn()
     cout << m_p2.getName() << " played " << c2.getName() << " of " << c2.getSuit() << ". ";
 
     // Compare the card values
-    while (c1.getValue() == c2.getValue() && m_p1.stacksize() > 0 && m_p2.stacksize() > 0)
+
+    while (c1.getValue() == c2.getValue())
     {
-        cout << "Draw." << endl;
+        cout << endl
+             << "Draw." << endl;
+        if (m_p1.stacksize() <= 1 || m_p2.stacksize() <= 1)
+        {
 
-        Card c3 = m_p1.playCard();
-        temp_deck.push_back(c3);
-        Card c4 = m_p2.playCard();
-        temp_deck.push_back(c4);
-        Card c5 = m_p1.playCard();
-        temp_deck.push_back(c5);
-        Card c6 = m_p2.playCard();
-        temp_deck.push_back(c6);
+            cout << "Not enough cards for war." << endl
+                 << "Spliting equaly the left cards" << endl;
 
-        c1 = c5;
-        c2 = c6;
+            cout << "Bob stack size: " << m_p1.stacksize() << ". Alice stack size: " << m_p2.stacksize() << endl;
+            while (m_p1.stacksize() > 0)
+            {
+                temp_deck.push_back(m_p1.playCard());
+            }
+            while (m_p2.stacksize() > 0)
+            {
+                temp_deck.push_back(m_p2.playCard());
+            }
 
-        cout << m_p1.getName() << " played " << c1.getName() << " of " << c1.getSuit() << ". ";
-        cout << m_p2.getName() << " played " << c2.getName() << " of " << c2.getSuit() << ". ";
+            for (const Card &card : temp_deck)
+            {
+                std::cout << "Value: " << card.getValue() << ", Suit: " << card.getSuit() << ", Name: " << card.getName() << std::endl;
+            }
+
+            for (size_t i = 0; i < temp_deck.size(); ++i) // split the cards
+            {
+                if (i % 2 == 0)
+                {
+                    m_p1.winCard(temp_deck.back());
+                    temp_deck.pop_back();
+                }
+                else
+                {
+                    m_p2.winCard(temp_deck.back());
+                    temp_deck.pop_back();
+                }
+            }
+            break;
+        }
+        else
+        {
+            Card c3 = m_p1.playCard();
+            temp_deck.push_back(c3);
+            Card c4 = m_p2.playCard();
+            temp_deck.push_back(c4);
+            cout << m_p1.getName() << " played " << c3.getName() << " of " << c3.getSuit() << "(coverd). ";
+            cout << m_p2.getName() << " played " << c4.getName() << " of " << c4.getSuit() << "(coverd). ";
+            Card c5 = m_p1.playCard();
+            temp_deck.push_back(c5);
+            Card c6 = m_p2.playCard();
+            temp_deck.push_back(c6);
+
+            c1 = c5;
+            c2 = c6;
+
+            cout << m_p1.getName() << " played " << c1.getName() << " of " << c1.getSuit() << ". ";
+            cout << m_p2.getName() << " played " << c2.getName() << " of " << c2.getSuit() << ". ";
+        }
     }
-    if (c1.getValue() < c2.getValue())
+    if (!temp_deck.empty()) // for case all finished after a long draw 
     {
-        cout << m_p2.getName() << " wins." << endl;
-        m_p2.getAllTheJackpot(&temp_deck);
-    }
-    else //
-    {
-        cout << m_p1.getName() << " wins." << endl;
-        m_p1.getAllTheJackpot(&temp_deck);
+
+        if (c1.getValue() < c2.getValue())
+        {
+            cout << m_p2.getName() << " wins." << endl;
+            m_p2.getAllTheJackpot(&temp_deck);
+        }
+        else
+        {
+            cout << m_p1.getName() << " wins." << endl;
+            m_p1.getAllTheJackpot(&temp_deck);
+        }
     }
 }
 
 void Game::playAll()
 {
     // Play the game until one player runs out of cards
-    while (m_p1.stacksize() > 0 || m_p2.stacksize() > 0)
+    while (m_p1.stacksize() > 0 && m_p2.stacksize() > 0)
     {
         playTurn();
     }
