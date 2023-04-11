@@ -8,6 +8,8 @@
         Player& m_p1;
         Player& m_p2;
         Deck m_deck; // Declaration of m_deck member variable
+        int Draws;
+        
 
     public:
         Game(Player& p1, Player& p2);
@@ -18,6 +20,7 @@
         void printLastTurn() const;
         void printStats() const;
         void printPlayerStats() const;
+        void addDraw();
     };
 
 

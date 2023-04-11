@@ -3,13 +3,22 @@
 
 using namespace std;
 
-Player::Player(const string &name) : _name(name), m_stack(), m_taken() {}
+Player::Player(const string &name) : _name(name), m_stack(), m_taken() {
+    _wins = 0;
+}
 
 string Player::getName() const
 {
     return this->_name;
 }
-
+void Player::setWin(int num)
+{
+   _wins = num;
+}
+int Player::getWins()
+{
+    return this->_wins;
+}
 Card Player::playCard()
 {
     if (!m_stack.empty())

@@ -8,9 +8,11 @@ using namespace std;
 
 Game::Game(Player &p1, Player &p2) : m_p1(p1), m_p2(p2)
 {
-
     Deck m_deck; // Create a Deck object
     m_deck.splitDeck(&p1, &p2);
+    Draws = 0;
+    m_p1.setWin(0);
+    m_p2.setWin(0);
 }
 
 void Game::playTurn()
@@ -40,8 +42,8 @@ void Game::playTurn()
 
     while (c1.getValue() == c2.getValue())
     {
-        cout << endl
-             << "Draw." << endl;
+        this->addDraw();
+        cout << endl<< "Draw." << endl;
         if (m_p1.stacksize() <= 1 || m_p2.stacksize() <= 1)
         {
 
@@ -105,11 +107,14 @@ void Game::playTurn()
         {
             cout << m_p2.getName() << " wins." << endl;
             m_p2.getAllTheJackpot(&temp_deck);
+            m_p2.setWin(m_p2.getWins()+1);
         }
         else
         {
             cout << m_p1.getName() << " wins." << endl;
             m_p1.getAllTheJackpot(&temp_deck);
+            m_p1.setWin(m_p2.getWins()+1);
+
         }
     }
 }
@@ -122,6 +127,11 @@ void Game::playAll()
         playTurn();
     }
 }
+
+void Game::addDraw(){
+    Draws++;
+};
+
 
 void Game::printWiner() const
 {
@@ -175,6 +185,7 @@ void Game::printLastTurn() const
     cout << c2.getName() << " of " << c2.getSuit() << endl;
 }
 
+
 void Game::printStats() const
 {
     // Print overall game statistics
@@ -184,7 +195,32 @@ void Game::printStats() const
     cout << "Total cards taken: " << m_p1.cardesTaken() + m_p2.cardesTaken() << endl;
     printWiner();
     cout << endl;
+
+
+    // Calculate and print win rate
+
+        double winRateP1 = (static_cast<double>(m_p1.getWins())) * 100;
+        double winRateP2 = (static_cast<double>(m_p2.getWins())) * 100;
+        cout << "Player 1 Win Rate: " << winRateP1 << "%" << endl;
+        cout << "Player 2 Win Rate: " << winRateP2 << "%" << endl;
+    
+
+    // Print cards won by each player
+    cout << "Cards won by Player 1: " << m_p1.cardesTaken() << endl;
+    cout << "Cards won by Player 2: " << m_p2.cardesTaken() << endl;
+
+    // Calculate and print draw rate
+    int totalDraws = this->Draws;
+    if (totalDraws > 0)
+    {
+        double drawRate = (static_cast<double>(totalDraws) / (m_p1.getWins() + m_p2.getWins())) * 100;
+        cout << "Draw Rate: " << drawRate << "%" << endl;
+    }
+
+    // Print amount of draws
+    cout << "Total draws: " << totalDraws << endl;
 }
+
 
 void Game::printPlayerStats() const
 {

@@ -12,6 +12,8 @@ class Player
         std::vector<Card> m_stack;
         std::vector<Card> m_taken;
         std::vector<Card> m_playedCards;
+        int _wins;
+
 
     public:
         Player(const std::string& name);
@@ -26,6 +28,8 @@ class Player
         void getAllTheJackpot(std::vector<Card>* tempDeck);
         bool operator==(const Player& other) const;
         void winCard(Card &c);
+        int getWins();
+        void setWin(int num);
 
     };
 
