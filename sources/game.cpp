@@ -4,36 +4,34 @@
 #include <iostream>
 #include <iomanip>
 
-using namespace std; 
+using namespace std;
 
-Game::Game(Player &p1, Player &p2) : m_p1(p1), m_p2(p2) {
-     
+Game::Game(Player &p1, Player &p2) : m_p1(p1), m_p2(p2)
+{
+
     Deck m_deck; // Create a Deck object
-    m_deck.splitDeck(&p1,&p2);
-    cout << p1.stacksize()<< "," <<p2.stacksize() << endl;
-
+    m_deck.splitDeck(&p1, &p2);
 }
 
 void Game::playTurn()
 {
-    if (m_p1 == m_p2) {
+    if (m_p1 == m_p2)
+    {
         throw std::runtime_error("Error: Players cannot be the same.");
     }
     // Both players put a card on the table
     Card c1 = m_p1.playCard();
     Card c2 = m_p2.playCard();
-    
-    vector<Card> temp_deck; 
+
+    vector<Card> temp_deck;
     temp_deck.push_back(c1);
     temp_deck.push_back(c2);
-
 
     cout << m_p1.getName() << " played " << c1.getName() << " of " << c1.getSuit() << ". ";
     cout << m_p2.getName() << " played " << c2.getName() << " of " << c2.getSuit() << ". ";
 
-
     // Compare the card values
-    while (c1.getValue() == c2.getValue())
+    while (c1.getValue() == c2.getValue() && m_p1.stacksize() > 0 && m_p2.stacksize() > 0)
     {
         cout << "Draw." << endl;
 
@@ -45,13 +43,12 @@ void Game::playTurn()
         temp_deck.push_back(c5);
         Card c6 = m_p2.playCard();
         temp_deck.push_back(c6);
-        
+
         c1 = c5;
         c2 = c6;
 
         cout << m_p1.getName() << " played " << c1.getName() << " of " << c1.getSuit() << ". ";
         cout << m_p2.getName() << " played " << c2.getName() << " of " << c2.getSuit() << ". ";
-
     }
     if (c1.getValue() < c2.getValue())
     {
@@ -122,7 +119,7 @@ void Game::printLastTurn() const
     cout << c1.getName() << " of " << c1.getSuit() << endl;
 
     cout << m_p2.getName() << " played: ";
-     const Card &c2 = m_p2.getLastPlayedCard();
+    const Card &c2 = m_p2.getLastPlayedCard();
     cout << c2.getName() << " of " << c2.getSuit() << endl;
 }
 
