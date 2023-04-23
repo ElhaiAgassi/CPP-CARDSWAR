@@ -4,8 +4,8 @@
 #include "sources/player.hpp"
 #include "sources/game.hpp"
 #include "sources/card.hpp"
-
 using namespace ariel;
+
 
 TEST_CASE("Test 1 - Initialization") {
     Player p1("Alice");

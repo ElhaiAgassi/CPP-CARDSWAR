@@ -2,6 +2,7 @@
 
 #include "player.hpp"
 #include "deck.hpp"
+namespace ariel{
 
     class Game {
     private:
@@ -24,3 +25,4 @@
     };
 
 
+}

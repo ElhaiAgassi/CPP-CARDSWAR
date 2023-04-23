@@ -4,6 +4,7 @@
 #include "player.hpp"
 
 using namespace std;
+namespace ariel{
 
 class Deck
 {
@@ -33,3 +34,4 @@ private:
     // Vector to store the deck of cards
     vector<Card> m_deck;
 };
+}

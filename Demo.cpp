@@ -10,6 +10,7 @@
 #include <sstream>
 #include <stdexcept>
 using namespace std;
+using namespace ariel;
 
 #include "sources/player.hpp"
 #include "sources/game.hpp"
@@ -22,8 +23,8 @@ int main() {
    Player p2("Bob");
 
    Game game(p1,p2); 
-    for (int i=0;i<5;i++) {
-    game.playTurn();
+    for (int i=0;i<3;i++) {
+    game.playAll();
     }
    game.printLastTurn(); // print the last turn stats. For example:
                         // Alice played Queen of Hearts Bob played 5 of Spades. Alice wins.

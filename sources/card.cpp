@@ -1,6 +1,7 @@
 #include <string>
 #include "card.hpp"
 using namespace std;
+namespace ariel{
 
 
 
@@ -22,6 +23,6 @@ int Card::getValue() const {
     return m_value;
 }
 
-// bool Card::operator<(const Card& other) const {
-//     return value < other.value;
-// }
+
+
+}

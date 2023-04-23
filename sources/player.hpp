@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "card.hpp"
+namespace ariel{
 
 
 class Player
@@ -34,3 +35,4 @@ class Player
     };
 
 
+}

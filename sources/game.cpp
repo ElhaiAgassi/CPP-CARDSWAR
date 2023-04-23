@@ -5,6 +5,7 @@
 #include <iomanip>
 
 using namespace std;
+namespace ariel{
 
 Game::Game(Player &p1, Player &p2) : m_p1(p1), m_p2(p2)
 {
@@ -234,4 +235,5 @@ void Game::printPlayerStats() const
     cout << m_p2.getName() << ": " << endl;
     cout << "Total cards played: " << m_p2.getNumOfPlayedCards() << endl;
     cout << "Total cards taken: " << m_p2.cardesTaken() << endl;
+}
 }
