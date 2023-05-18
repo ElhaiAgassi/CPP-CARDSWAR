@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-
+namespace ariel
+{
 class Card
 {
 private:
@@ -15,3 +16,4 @@ public:
     std::string getName() const;
     void printCard() const;
 };
+} // namespace ariel

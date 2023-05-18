@@ -5,7 +5,8 @@
 #include <iomanip>
 
 using namespace std;
-
+namespace ariel
+{   
 Game::Game(Player &p1, Player &p2) : m_p1(p1), m_p2(p2)
 {
     Deck m_deck; // Create a Deck object
@@ -235,3 +236,4 @@ void Game::printPlayerStats() const
     cout << "Total cards played: " << m_p2.getNumOfPlayedCards() << endl;
     cout << "Total cards taken: " << m_p2.cardesTaken() << endl;
 }
+} 

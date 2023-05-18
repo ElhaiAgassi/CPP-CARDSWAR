@@ -2,7 +2,8 @@
 #include "player.hpp"
 
 using namespace std;
-
+namespace ariel
+{
 Player::Player(const string &name) : _name(name), m_stack(), m_taken() {
     _wins = 0;
 }
@@ -80,3 +81,4 @@ bool Player::operator==(const Player &other) const
     // Compare member variables for equality
     return (_name == other.getName());
 }
+} // namespace ariel

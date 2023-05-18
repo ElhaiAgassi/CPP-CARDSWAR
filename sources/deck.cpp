@@ -8,7 +8,7 @@
 #include <string>
 
 using namespace std;
-
+namespace ariel{
 Deck::Deck()
 {
     // Initialize the deck with 52 cards
@@ -73,4 +73,5 @@ void Deck::splitDeck(Player *p1, Player *p2)
             p2->takeCard(m_deck[i]);
         }
     }
+}
 }

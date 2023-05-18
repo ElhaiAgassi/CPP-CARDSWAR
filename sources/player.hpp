@@ -4,7 +4,8 @@
 #include <string>
 #include "card.hpp"
 
-
+namespace ariel
+{   
 class Player
     {
     private:
@@ -33,4 +34,4 @@ class Player
 
     };
 
-
+}
